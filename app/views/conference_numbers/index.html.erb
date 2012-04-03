@@ -1,0 +1,24 @@
+<h1>Listing conference numbers</h1> <br />
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Conference Number</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+	
+	<% @conference_numbers.each do |conference_number| %>
+  		<tr>
+    		<td><%= conference_number.conference_number %></td>
+    		<td><%= link_to 'Edit', edit_conference_number_path(conference_number), :class => 'btn btn-mini btn-primary' %>
+    		<%= link_to 'Destroy', conference_number, confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %> </td>
+  		</tr>
+	<% end %>
+	</tbody>
+</table>
+
+<br />
+
+<%= link_to 'New Conference number', new_conference_number_path, :class => 'btn btn-success' %>
