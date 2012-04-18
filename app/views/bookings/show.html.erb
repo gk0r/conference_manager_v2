@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>User:</b>
+  <%= @booking.user_id %>
+</p>
+
+<p>
+  <b>Conference number:</b>
+  <%= @booking.conference_number_id %>
+</p>
+
+<p>
+  <b>Date:</b>
+  <%= @booking.date %>
+</p>
+
+<p>
+  <b>Time start:</b>
+  <%= @booking.time_start %>
+</p>
+
+<p>
+  <b>Time finish:</b>
+  <%= @booking.time_finish %>
+</p>
+
+<p>
+  <b>Note:</b>
+  <%= @booking.note %>
+</p>
+
+
+<%= link_to 'Edit', edit_booking_path(@booking) %> |
+<%= link_to 'Back', bookings_path %>

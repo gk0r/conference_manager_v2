@@ -23,7 +23,8 @@ end
 
 gem 'jquery-rails'
 gem 'simple_form'
-gem 'devise'
+gem 'bcrypt-ruby', :require => 'bcrypt'
+gem 'activeadmin'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
@@ -38,4 +39,4 @@ gem 'devise'
 # gem 'capistrano'
 
 # To use debugger
-# gem 'ruby-debug19', :require => 'ruby-debug'
+gem 'debugger', group: [:development, :test]

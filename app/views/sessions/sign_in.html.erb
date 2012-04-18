@@ -1,0 +1,25 @@
+<form name="sign_up" action="<%=sign_in_url%>" method="post" class="form-horizontal">
+	<fieldset>
+		<legend>Please sign in</legend> 
+		
+		<!-- TODO Make the Username box autofocus upon initial entry. Perhaps via HTML5 or similar JavaScript -->
+		<!-- Line -->
+		<div class="control-group">
+			<%= label_tag :username, "Username:", :class => "control-label"%>
+			<div class="controls">
+				<%= text_field_tag :username, params[:username], :class => "input-medium" %>
+			</div>
+		</div><!-- / Line -->
+		<!-- Line -->
+		<div class="control-group">
+			<%= label_tag :password, "Password:", :class => "control-label"%>
+			<div class="controls">
+				<%= password_field_tag :password, params[:password], :class => "input-medium" %>
+			</div>
+		</div><!-- / Line -->
+		<div class="form-actions">
+			<%= submit_tag "Login", :class=>'btn btn-primary' %>
+			<%= link_to "Cancel", root_url, :class => 'btn btn-danger' %>
+		</div>
+	</fieldset>
+</form>

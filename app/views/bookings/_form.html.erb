@@ -1,0 +1,18 @@
+<%= simple_form_for(@booking, :html => {:class=> 'form form-horizontal'}) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.association :conference_number, :input_html => {:class=>'span2'}, :include_blank=>false %>
+    <%= f.input :date, :as => :string, :input_html => { :class => 'span2'} %>
+    <%= f.input :time_start, :as => :string, :input_html => { :class => 'span1'} %>
+    <%= f.input :time_finish, :as => :string, :input_html => { :class => 'span1'} %>
+    <%= f.input :note, :input_html => {:cols => 50, :rows => 3} %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit, :class=>'btn btn-primary' %>
+    <%= link_to "Cancel", bookings_path, :class=>'btn btn-danger' %>
+  </div>
+<% end %>
+
+<%= debug (@booking)%>

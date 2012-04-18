@@ -1,6 +1,25 @@
 ConferenceManager2::Application.routes.draw do
-  devise_for :users
 
+  get "store/index"
+
+  get "store/new"
+
+  get "store/create"
+
+  get "store/destroy"
+
+  resources :bookings
+
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
+  get "sign_up" => "users#new", :as => "sign_up"
+  get "sign_in" => "sessions#new"
+  post "sign_in" => "sessions#create"
+  get "sign_out"=> "sessions#destroy"
+
+  resources :users
   resources :conference_numbers
   
   root :to => 'conference_numbers#index'

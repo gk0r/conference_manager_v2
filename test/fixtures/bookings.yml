@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  user_id: MyString
+  conference_number_id: MyString
+  date: 2012-04-05
+  time_start: 2012-04-05 15:56:45
+  time_finish: 2012-04-05 15:56:45
+  note: MyString
+
+two:
+  user_id: MyString
+  conference_number_id: MyString
+  date: 2012-04-05
+  time_start: 2012-04-05 15:56:45
+  time_finish: 2012-04-05 15:56:45
+  note: MyString

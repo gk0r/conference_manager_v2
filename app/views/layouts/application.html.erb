@@ -32,13 +32,11 @@
           </a>
           <a class="brand" href="#">Conference Manager 2</a>
           <div class="container nav-collapse">
-            <ul class="nav">
-                <li><%= link_to "New booking", "#"  %></li>
-                <li><%= link_to "View bookings", "#"  %></li>
-                <li><%= link_to "Conference numbers", conference_numbers_path  %></li>
-					 <li><%= link_to "Users", "#"  %></li>
-            </ul>
-				<!--Render Login/Registration items-->
+             
+             <!--Render Menu Items items (Main Menu)-->
+ 				<%= render 'layouts/menu_items'%>
+ 				
+				<!--Render Login/Registration items (Side Menu)-->
 				<%= render 'layouts/login_panel'%>
           </div><!--/.nav-collapse -->
         </div>
