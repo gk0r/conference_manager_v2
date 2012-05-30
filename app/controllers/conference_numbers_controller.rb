@@ -73,7 +73,7 @@ class ConferenceNumbersController < ApplicationController
   # DELETE /conference_numbers/1.json
   def destroy
     @conference_number = ConferenceNumber.find(params[:id])
-    @conference_number.destroy
+    @conference_number.destroy if current_user.admin?
 
     respond_to do |format|
       format.html { redirect_to conference_numbers_url }

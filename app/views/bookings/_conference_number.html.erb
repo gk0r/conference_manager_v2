@@ -1,0 +1,15 @@
+<div class="control-group select required">
+  <label class="select required control-label" for="booking_conference_number_id"><abbr title="required">*</abbr> Conference number</label>
+  <div class="controls">
+    <select class="select required span2" id="booking_conference_number_id" name="booking[conference_number_id]">
+      <% @conference_number.each do |number| %>
+        <option value="<%= number.id %>">
+          <%= number.conference_number %>
+        </option>
+      <% end %>
+    </select>
+  </div>
+</div>
+
+
+

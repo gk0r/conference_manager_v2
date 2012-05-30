@@ -1,0 +1,44 @@
+<ul class="nav nav-list span2">
+
+  <li class="nav-header"> Bookings </li>
+  <li>
+    <a href="<%= new_booking_path  %>"> <i class="icon-pencil"></i> Make a new booking </a>
+    <a href="<%= my_path  %>"> <i class="icon-search"></i> View my bookings </a>
+  </li>
+
+  <li class="nav-header"> User Profile </li>
+  <li>
+    <a href="<%= profile_path %>"> <i class="icon-cog"></i> Update profile </a>
+    <a href="<%= sign_out_path %>"> <i class="icon-off"></i> Sign out </a>
+  </li>
+  
+  <li class="nav-header"> Dev Toolbox </li>
+  <li>
+    <a href="<%= clear_booking_steps_path %>"> <i class="icon-trash"></i> Clear Booking Steps </a>
+  </li>  
+  
+</ul>
+
+<div class="span8">
+  <h2> Welcome <%= current_user.first_name %> ! </h2>
+  <p>
+    Conference Manager is a tool for booking MeetMe numbers. This facility is available to all Family Systems branch staff.
+  </p>
+  <h3>Conference Numbers</h3>
+  <p> There are currently <strong> <%= ConferenceNumber.count %> </strong> MeetMe numbers available through Conference Manager. </p>
+  
+  <% if current_user.admin? %>
+  <h3> Administrative access </h3>
+  <p> You are logged in as an <strong>administrator.</strong> Certain actions are restricted to administrators only, these are: </p>
+    <ul>
+      <li> Ability to edit or remove conference numbers (All users have ability to add new numbers) </li>
+      <li> Ability to edit all user profiles</li>
+      <li> Ability to view and edit all booked entries</li>
+      <li> Notifications when new users register</li>
+      <li> Notifications when new conference numbers are added to the system</li>
+    </ul>
+  <p> Lastly, <strong>only administrators can promote other users to administrative rank</strong> this is done by accessing their profile and ticking the <strong>"Admin"</strong> checkbox </p>
+  <% end %>
+  
+</div>
+  

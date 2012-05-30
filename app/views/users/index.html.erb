@@ -15,14 +15,20 @@
 
 	<% @users.each do |user| %>
 	  <tr>
-	    <td><%= user.username %></td>
-	    <td><%= user.first_name %></td>
-	    <td><%= user.last_name %></td>
-	    <td><%= user.telephone_number %></td>
+	    <td><%= link_to user.username, edit_user_path(user) %></td>
+	    <td><%= link_to user.first_name, edit_user_path(user) %></td>
+	    <td><%= link_to user.last_name, edit_user_path(user) %></td>
+	    <td><%= link_to user.telephone_number, edit_user_path(user) %></td>
 	    <td><%= image_tag("apply.png") if user.admin %></td>
 	    <td>
-			<%= link_to 'Edit', edit_user_path(user), :class=> 'btn btn-mini btn-primary' %>
-	    	<%= link_to 'Destroy', user, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger' %>
+	      
+			<%= link_to(edit_user_path(user), :class=> 'btn btn-mini btn-primary') do %>
+  			<i class="icon-user icon-white"> </i> Edit
+		  <% end %>
+		  
+    	<%= link_to user, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger' do %>
+	    	<i class="icon-trash icon-white"> </i> Delete
+    	<% end %>
 		</td>
 	  </tr>
 	<% end %>
@@ -30,3 +36,4 @@
 </table>
 
 <%= link_to 'New User', new_user_path, :class=>'btn btn-primary' %>
+

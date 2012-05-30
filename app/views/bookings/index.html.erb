@@ -1,34 +1,38 @@
-<legend>Listing bookings</legend>
+<div class="row">
+  <div class="span10">
+    <legend>Listing bookings</legend>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-    	<th>User</th>
-	    <th>Conference Number</th>
-	    <th>Date</th>
-	    <th>Time start</th>
-	    <th>Time finish</th>
-	    <th>Note</th>
-	    <th>Actions</th>
-	  </tr>
-  </thead>
-<tbody>
-	
-<% @bookings.each do |booking| %>
-  <tr>
-    <td><%= booking.user.first_name %>  <%= booking.user.last_name %></td>
-    <td><%= booking.conference_number.conference_number %></td>
-    <td><%= booking.date %></td>
-    <td><%= booking.time_start %></td>
-    <td><%= booking.time_finish %></td>
-    <td><%= booking.note %></td>
-    <td>
-      <%= link_to 'Edit', edit_booking_path(booking), :class=>'btn btn-mini btn-primary' %>
-      <%= link_to 'Destroy', booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger' %>
-    </td>
-  </tr>
-<% end %>
-</tbody>
-</table>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+        	<th>User</th>
+    	    <th>Conference Number</th>
+    	    <th>Date</th>
+    	    <th>Time start</th>
+    	    <th>Time finish</th>
+    	    <th>Note</th>
+    	    <th>Actions </th>
+    	  </tr>
+      </thead>
+    <tbody>
 
-<%= link_to 'New Booking', new_booking_path, :class => 'btn btn-primary' %>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= booking.user.first_name %>  <%= booking.user.last_name %></td>
+        <td><%= booking.try(:conference_number).conference_number %></td>
+        <td><%= booking.date.strftime('%A, %d %B %Y') %></td>
+        <td><%= booking.time_start.strftime('%I:%M %p') %></td>
+        <td><%= booking.time_finish.strftime('%I:%M %p') %></td>
+        <td><%= booking.note %></td>
+        <td>
+          <%= link_to 'Edit', edit_booking_path(booking), :class=>'btn btn-mini btn-primary' if authorise_action(booking.user.id) %>
+          <%= link_to 'Cancel', booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger' if authorise_action(booking.user.id) %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+    </table>
+
+    <%= link_to 'New Booking', new_booking_path, :class => 'btn btn-primary' %>
+  </div>
+</div>

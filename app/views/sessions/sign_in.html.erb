@@ -2,7 +2,6 @@
 	<fieldset>
 		<legend>Please sign in</legend> 
 		
-		<!-- TODO Make the Username box autofocus upon initial entry. Perhaps via HTML5 or similar JavaScript -->
 		<!-- Line -->
 		<div class="control-group">
 			<%= label_tag :username, "Username:", :class => "control-label"%>
@@ -23,3 +22,9 @@
 		</div>
 	</fieldset>
 </form>
+
+<!-- This is an 'ugly' solution but should work with all browsers -->
+<!-- Automatically focus on the username field -->
+<script type="text/javascript" language="JavaScript">
+  document.forms['sign_up'].elements['username'].focus();
+</script>

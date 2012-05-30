@@ -1,18 +1,30 @@
-<%= simple_form_for(@booking, :html => {:class=> 'form form-horizontal'}) do |f| %>
-  <%= f.error_notification %>
+<div class="row">
+  <div class="span6">
+    <%= simple_form_for(@booking, :html => {:class => 'form form-horizontal'}) do |f| %>
+      <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.association :conference_number, :input_html => {:class=>'span2'}, :include_blank=>false %>
-    <%= f.input :date, :as => :string, :input_html => { :class => 'span2'} %>
-    <%= f.input :time_start, :as => :string, :input_html => { :class => 'span1'} %>
-    <%= f.input :time_finish, :as => :string, :input_html => { :class => 'span1'} %>
-    <%= f.input :note, :input_html => {:cols => 50, :rows => 3} %>
+      <div class="form-inputs">
+        <%= f.input :date, :as => :string, :disabled => @booking.last_step?, 
+            :input_html => { :class => 'span2', :value => (@booking.date.strftime("%A, %d %B %Y") if @booking.date) } %>
+        <%= f.input :time_start, :as => :string, :disabled => @booking.last_step?, 
+            :input_html => { :class => 'span1', :value => (@booking.time_start.strftime("%H:%M %p") if @booking.time_start) } %>
+        <%= f.input :time_finish, :as => :string, :input_html => { :class => 'span1'}, :disabled => @booking.last_step?,
+             :input_html => { :class => 'span1', :value => (@booking.time_finish.strftime("%H:%M %p") if @booking.time_finish) } %>
+        <%= f.input :note, :input_html => {:cols => 50, :rows => 3} %>
+
+       <!-- <%= %>f.association :conference_number, :input_html => {:class=>'span2'}, :include_blank => false if @booking.last_step? -->
+        
+        <%= f.input :conference_number_id, :collection => @conference_numbers, :as => :select, :include_blank => false if @booking.last_step? %>
+      </div>
+  
+      <div class="form-actions">
+        <%= f.submit (@booking.last_step? ? "Book" : "Check availability"), :class=>'btn btn-primary' %>
+        <%= f.submit "Cancel", :name => "cancel", :class=>'btn btn-danger' %>
+        <%= f.submit "Reschedule", :name => "reschedule", :class => 'btn btn-warning' if @booking.last_step? %>
+      </div>
+
+    <% end %>
   </div>
+</div>
 
-  <div class="form-actions">
-    <%= f.button :submit, :class=>'btn btn-primary' %>
-    <%= link_to "Cancel", bookings_path, :class=>'btn btn-danger' %>
-  </div>
-<% end %>
-
-<%= debug (@booking)%>
+<%= debug(@conference_number)%>

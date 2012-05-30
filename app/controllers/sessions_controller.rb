@@ -20,6 +20,13 @@ class SessionsController < ApplicationController
 
   def destroy
     session[:user_id] = nil
+    session[:current_step] = session[:booking_params] = session[:booking_step] = nil
     redirect_to root_url, notice: t('flash.sign_out')
   end
+  
+  def clear_booking_steps
+    session[:current_step] = session[:booking_params] = session[:booking_step] = nil
+     redirect_to root_url, notice: "Booking sessions paramters and steps have been cleared"
+  end
+  
 end

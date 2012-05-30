@@ -7,6 +7,8 @@
     <%= f.input :first_name, :required => true %>
     <%= f.input :last_name, :required => true %>
     <%= f.input :telephone_number, :required => true %>
+    <%= f.input :admin if (current_user && current_user.admin?) %>
+    
   </div>
 
   <div class="form-actions">

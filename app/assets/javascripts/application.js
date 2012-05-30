@@ -18,6 +18,7 @@
 
 $(function() {
 	$("#booking_date").datepicker({ dateFormat: "DD, d MM yy"});
+	$("#booking_show_date").datepicker({ dateFormat: "DD, d MM yy"});
 	
 	// $("#time_start").timePicker();
 	$("#booking_time_start, #booking_time_finish").timePicker({
@@ -49,5 +50,6 @@ $(function() {
 	    $(this).removeClass("error");
 	  }
 	});
+	
 	
 });

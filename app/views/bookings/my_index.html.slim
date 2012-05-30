@@ -1,0 +1,47 @@
+/
+/ This template is written in SLIM https://github.com/stonean/slim
+/ My attempt to evaluate this template engine and compare it with ERB.
+/ 
+/ BENEFITS: 
+/ It can be quick once mastered. I like the idea of not having to close tags, I hate doing this by hand.
+/ Another strong advantage is that I can easily comment and these comments WILL NOT be rendered as HTML comments in the final view.
+/ Lastly, I like not having to worry about the <%=%> tags, so much needless typing...
+/
+/ DRAWBACKS:
+/ I notice that the final HTML product is very 'ugly' and simply strung together. That makes inspecting more difficult. 
+/ I am not sure what effect this has on the browser performance. Is it possible that it loads faster this way?
+/
+/ Next on my list is HAML. 
+/
+
+.row
+  .span8
+    legend My Bookings
+    
+    table.table.table-striped
+      thead
+        tr
+          th Date
+          th Start
+          th Finish
+          th Conference Number
+          th Notes
+          th Actions
+
+      tbody
+        - @bookings.each do |booking|
+          tr
+            td = booking.date.strftime('%A, %d %B %Y')
+            td = booking.time_start.strftime('%I:%M %p')
+            td = booking.time_finish.strftime('%I:%M %p')
+            td = booking.try(:conference_number).conference_number
+            td = booking.note
+            td 
+              - if authorise_action(booking.user.id)
+                =' link_to 'Edit', edit_booking_path(booking), :class=>'btn btn-mini btn-primary'
+                =' link_to 'Cancel', booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger'
+    
+    .pagination-centered
+      = will_paginate @bookings
+      
+    = link_to 'New Booking', new_booking_path, :class => 'btn btn-primary'

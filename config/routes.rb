@@ -1,14 +1,19 @@
 ConferenceManager2::Application.routes.draw do
 
-  get "store/index"
+   # get "store/index" # Not sure what this is or how it got here....
+  #  get "store/new"
+  #  get "store/create"
+  #  get "store/destroy"
 
-  get "store/new"
+  root :to => 'main_landing#index'
 
-  get "store/create"
-
-  get "store/destroy"
-
-  resources :bookings
+  resources :users, :conference_numbers, :bookings
+  
+  # My Routes
+  get "my" => "bookings#my_index" # Allow easy reference to "My Bookings"
+  get "profile" => "users#edit" # Allow easy reference to "My Profile"
+  
+  # match "profile" => "users#edit"
 
   ActiveAdmin.routes(self)
 
@@ -18,11 +23,10 @@ ConferenceManager2::Application.routes.draw do
   get "sign_in" => "sessions#new"
   post "sign_in" => "sessions#create"
   get "sign_out"=> "sessions#destroy"
-
-  resources :users
-  resources :conference_numbers
   
-  root :to => 'conference_numbers#index'
+  get "clear_booking_steps" => "sessions#clear_booking_steps"
+  
+  get "booking/check_availability" => "bookings#check_availability" # This route is intentionally defined as BOOKING (instead of 'bookings'). Althrough I prefer the idea of /bookings/check_availability, I cannot work out how to separate it from the /bookings/:ID/edit.
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

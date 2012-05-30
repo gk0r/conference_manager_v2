@@ -17,11 +17,16 @@ class ApplicationController < ActionController::Base
   end
 
   def authorise_action(user_id)
-    return false unless @user_id = current_user
+    return false unless @user_id = current_user.id or current_user.admin?
   end
   
   def paginate_at ()
-    return 8
+    return 12
   end
+  
+  def clear_booking_vars
+    session[:current_step] = session[:booking_params] = session[:booking_step] = nil
+  end
+  
   
 end

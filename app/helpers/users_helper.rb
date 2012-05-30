@@ -2,7 +2,7 @@ module UsersHelper
   
   def password_hint
     if controller.action_name == "update" || controller.action_name == "edit" # Request the user to re-enter their password when they update their profile
-      "Please re-enter your password if you update your profile"
+      "Please re-enter your password if you update your profile" # Should this be "Please leave this field empty if you do not wish to change your password?"
     else # Assume new action, and anything else...
       "Please create a new password"
     end
@@ -24,4 +24,16 @@ module UsersHelper
     end
   end
   
-end
+  def authorise_action(user_id)
+    @user_id = user_id
+    
+    if @user_id == current_user.id or current_user.admin?
+           return true
+    else
+           return false
+    end
+  
+  end
+  
+  
+end # End of User Helper class

@@ -1,22 +1,33 @@
-<legend>Listing conference numbers</legend>
+<div class="row">
+  <div class="span4">
+    <legend>Listing conference numbers</legend>
 
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>Conference Number</th>
-      <th>Actions</th>
-    </tr>
-  </thead>
-  <tbody>
-	
-	<% @conference_numbers.each do |conference_number| %>
-  		<tr>
-    		<td><%= conference_number.conference_number %></td>
-    		<td><%= link_to 'Edit', edit_conference_number_path(conference_number), :class => 'btn btn-mini btn-primary' %>
-    		<%= link_to 'Destroy', conference_number, confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %> </td>
-  		</tr>
-	<% end %>
-	</tbody>
-</table>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Conference Number</th>
+          <% if current_user.admin? %>
+            <th>Actions</th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
 
-<%= link_to 'New Conference number', new_conference_number_path, :class => 'btn btn-primary' %>
+      <% @conference_numbers.each do |conference_number| %>
+      		<tr>
+        		<td><%= conference_number.conference_number %></td>
+        		
+        		<% if current_user.admin? %>
+          		<td>
+            		<%= link_to 'Edit', edit_conference_number_path(conference_number), :class => 'btn btn-mini btn-primary' %>
+            		<%= link_to 'Remove', conference_number, confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %> 
+          		</td>
+        		<% end %>
+      		</tr>
+      <% end %>
+      </tbody>
+    </table>
+
+    <%= link_to 'New Conference number', new_conference_number_path, :class => 'btn btn-primary' %>
+  </div>
+</div>

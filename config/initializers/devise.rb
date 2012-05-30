@@ -27,8 +27,6 @@ Devise.setup do |config|
   # You can also supply a hash where the value is a boolean determining whether
   # or not authentication should be aborted when the value is not present.
   # config.authentication_keys = [ :email ]
-  
-  config.authentication_keys = [ :username ]
 
   # Configure parameters from the request object used for authentication. Each entry
   # given should be a request method and it will automatically be passed to the
@@ -87,7 +85,7 @@ Devise.setup do |config|
   config.stretches = Rails.env.test? ? 1 : 10
 
   # Setup a pepper to generate the encrypted password.
-  # config.pepper = "8b9cbd19f045d07930398f3752c591a2c76ad2d9d3b0553422a4166a88d035cb4e3ae2a7fc74cc07121075287c992325f92fb2407962a9be81724170c12554e8"
+  # config.pepper = "a75ba8c7dd8f9a177a04c5959141d03dc73767c76a0522c29c8d8e56d30f97b2e0502390a7a2190a37d356d45618cc51239148bbd0e719a980e4dffe03cac76c"
 
   # ==> Configuration for :confirmable
   # A period that the user is allowed to access the website even without
@@ -123,7 +121,7 @@ Devise.setup do |config|
 
   # ==> Configuration for :validatable
   # Range for password length. Default is 6..128.
-  config.password_length = 4..128
+  # config.password_length = 6..128
 
   # Email regex used to validate email formats. It simply asserts that
   # an one (and only one) @ exists in the given string. This is mainly
