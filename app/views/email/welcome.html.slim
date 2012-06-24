@@ -1,0 +1,12 @@
+/ 'Welcome' email. Sent to new users upon their registration.
+
+markdown:
+    Hi #{@user.first_name},  
+    
+    Welcome to **Conference Manger!**   
+    
+    You have successfully registered and now have free access to **#{ConferenceNumber.count}** Meet Me numbers.  
+    You can bookmark this URL **[#{root_url}](#{root_url})** for easy reference in the future.  
+    
+    Thank you,  
+    Conference Manager  

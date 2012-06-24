@@ -8,11 +8,18 @@
     <%= f.input :last_name, :required => true %>
     <%= f.input :telephone_number, :required => true %>
     <%= f.input :admin if (current_user && current_user.admin?) %>
-    
+    <%= f.input :admin_notifications if (current_user && current_user.admin?) %>
   </div>
 
   <div class="form-actions">
-   <%= f.button :submit, :class => 'btn btn-primary' %>
-	<%= link_to "Cancel", root_url, :class => 'btn btn-danger'  %>
+    <%= f.button :submit, :class => 'btn btn-primary' %>
+    <%= link_to "Cancel", root_url, :class => 'btn btn-danger'  %>
+
+    <% if authorise_action(@user.id) %>
+      <%= link_to @user, confirm: 'Are you sure you want to delete your account?', method: :delete, :class=>'btn btn-danger' do %>
+        <i class="icon-trash icon-white"> </i> Delete this account
+      <% end %>
+    <% end %>
   </div>
+
 <% end %>

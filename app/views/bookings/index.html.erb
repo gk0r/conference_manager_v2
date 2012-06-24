@@ -19,19 +19,21 @@
     <% @bookings.each do |booking| %>
       <tr>
         <td><%= booking.user.first_name %>  <%= booking.user.last_name %></td>
-        <td><%= booking.try(:conference_number).conference_number %></td>
+        <td><%= booking.conference_number.conference_number %></td>
         <td><%= booking.date.strftime('%A, %d %B %Y') %></td>
         <td><%= booking.time_start.strftime('%I:%M %p') %></td>
         <td><%= booking.time_finish.strftime('%I:%M %p') %></td>
-        <td><%= booking.note %></td>
+        <td><%= truncate(booking.note, :length => 25, :omission => '... (cont)') %></td>
         <td>
-          <%= link_to 'Edit', edit_booking_path(booking), :class=>'btn btn-mini btn-primary' if authorise_action(booking.user.id) %>
-          <%= link_to 'Cancel', booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger' if authorise_action(booking.user.id) %>
+          <%= link_to 'Edit', edit_booking_path(booking), :class=>'btn btn-mini btn-primary' if authorise_action?(booking.user.id) %>
+          <%= link_to 'Cancel', booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger' if authorise_action?(booking.user.id) %>
         </td>
       </tr>
     <% end %>
     </tbody>
     </table>
+    
+    <div class="pagination-centered"> <%= will_paginate @bookings %> </div>
 
     <%= link_to 'New Booking', new_booking_path, :class => 'btn btn-primary' %>
   </div>

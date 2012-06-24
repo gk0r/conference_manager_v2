@@ -1,0 +1,14 @@
+<html>
+  <body>
+    Hi <%= @admin.first_name %>, <br /><br />
+    
+    <%= @actioned_by.to_label %> added new conference number: 
+    <%= link_to @conference_number.conference_number, edit_conference_number_url(@conference_number) %> <br /><br />
+    
+    You have received this email because you are an Administrator for Conference Manager.  <br />
+    You can update your notification preference in <%= link_to "your user profile.", edit_user_url(@admin) %> <br /><br />
+
+    Thank you, <br />
+    Conference Manager <br />
+  </body>
+</html>

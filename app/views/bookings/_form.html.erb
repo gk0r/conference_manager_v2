@@ -12,14 +12,14 @@
              :input_html => { :class => 'span1', :value => (@booking.time_finish.strftime("%H:%M %p") if @booking.time_finish) } %>
         <%= f.input :note, :input_html => {:cols => 50, :rows => 3} %>
 
-       <!-- <%= %>f.association :conference_number, :input_html => {:class=>'span2'}, :include_blank => false if @booking.last_step? -->
-        
         <%= f.input :conference_number_id, :collection => @conference_numbers, :as => :select, :include_blank => false if @booking.last_step? %>
       </div>
   
       <div class="form-actions">
         <%= f.submit (@booking.last_step? ? "Book" : "Check availability"), :class=>'btn btn-primary' %>
         <%= f.submit "Cancel", :name => "cancel", :class=>'btn btn-danger' %>
+        <!-- The 'Cancel this booking button does not work at the moment -->
+        <%= f.submit "Cancel this booking", :name => "cancel", :class=>'btn btn-danger' unless @booking.new_record? %>
         <%= f.submit "Reschedule", :name => "reschedule", :class => 'btn btn-warning' if @booking.last_step? %>
       </div>
 
@@ -27,4 +27,5 @@
   </div>
 </div>
 
-<%= debug(@conference_number)%>
+<%= debug(@booking) %>
+<%= debug(params) %>

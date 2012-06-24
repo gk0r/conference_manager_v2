@@ -17,6 +17,10 @@
     <a href="<%= clear_booking_steps_path %>"> <i class="icon-trash"></i> Clear Booking Steps </a>
   </li>  
   
+  <li>
+    <a href="/test"> <i class="icon-font"></i> Render Email </a>
+  </li>
+  
 </ul>
 
 <div class="span8">
@@ -24,8 +28,15 @@
   <p>
     Conference Manager is a tool for booking MeetMe numbers. This facility is available to all Family Systems branch staff.
   </p>
+  
   <h3>Conference Numbers</h3>
   <p> There are currently <strong> <%= ConferenceNumber.count %> </strong> MeetMe numbers available through Conference Manager. </p>
+  
+  <h3>Usernames and Email addresses</h3>
+  <p>
+    Please ensure that you have registered with your Centrelink username. Centrelink username (also known as logon) is how 
+    Conference Manager will email you
+  </p>
   
   <% if current_user.admin? %>
   <h3> Administrative access </h3>
@@ -33,9 +44,10 @@
     <ul>
       <li> Ability to edit or remove conference numbers (All users have ability to add new numbers) </li>
       <li> Ability to edit all user profiles</li>
-      <li> Ability to view and edit all booked entries</li>
-      <li> Notifications when new users register</li>
-      <li> Notifications when new conference numbers are added to the system</li>
+      <li> Ability to view and edit all telephone bookings</li>
+      <li> Notifications when new users register (you can update your preference in <%= link_to "your user profile", profile_path %>)</li>
+      <li> Notifications when new conference numbers are added to the system 
+          (you can update your preference in <%= link_to "your user profile", profile_path %>) </li>
     </ul>
   <p> Lastly, <strong>only administrators can promote other users to administrative rank</strong> this is done by accessing their profile and ticking the <strong>"Admin"</strong> checkbox </p>
   <% end %>

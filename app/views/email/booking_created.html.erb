@@ -1,0 +1,17 @@
+<html>
+  <body>
+    Hi <%= @user.first_name %>, <br /><br />
+    
+    You booked <b> <%= @booking.conference_number.conference_number %> </b> Meet Me number:<br /> <br />
+    
+    Date: <%= @booking.date.strftime('%A, %d %B %Y') %> <br />
+    From: <%= @booking.time_start.strftime('%I:%M %p') %> <br />
+    Until: <%= @booking.time_finish.strftime('%I:%M %p') %> <br /> <br />
+    
+    You can <%= link_to "re-schedule this booking", edit_booking_url(@booking) %> or 
+    <%= link_to "cancel it", edit_booking_url(@booking) %> at any time. <br /><br />
+
+    Thank you, <br />
+    Conference Manager <br />
+  </body>
+</html>

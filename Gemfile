@@ -28,19 +28,10 @@ gem 'activeadmin'
 gem 'slim'
 gem 'bootstrap-will_paginate'
 
-gem 'thin', group: :development
+# Following three are included to use Red Carpet and Markdown from http://railscasts.com/episodes/272-markdown-with-redcarpet
+gem 'redcarpet'
+gem 'albino'
+gem 'nokogiri'
 
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the web server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
 gem 'debugger', group: [:development, :test]
+gem 'letter_opener', :group => :development

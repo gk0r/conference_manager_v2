@@ -48,14 +48,14 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     logger.debug "!! Inside the CREATE action of the USERS controller"
-    @user = User.new(params[:user])
+    @user = User.new(params[:user], :as => current_user.role.to_sym )
     logger.debug "!! @user.role.to_sym [Create] = #{@user.role.to_sym}"
 
     respond_to do |format|
       if @user.save
-        logger.debug "!! @user = #{@user}"
-        session[:user_id] = @user.id # Log the current user in upon successful registration
-        format.html { redirect_to root_url, notice: "#{@user.first_name} #{@user.last_name} was successfully added." }
+        session[:user_id] = @user.id unless session[:user_id] # Log the current user in upon successful registration, unless the user is already registered
+        send_welcome_emails
+        format.html { redirect_to root_url }
         format.json { render json: @user, status: :created, location: @user }
       else
         format.html { render action: "new" }
@@ -85,11 +85,28 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
-    @user.destroy if current_user.admin?
+    if current_user.admin?
+      User.where(:admin => true, :admin_notifications => true).each do |admin|
+        Email.user_deleted(admin, @user, current_user).deliver
+      end
+      @user.destroy
+    end
 
     respond_to do |format|
       format.html { redirect_to users_url }
       format.json { head :no_content }
     end
   end
+  
+  # This method is called in CREATE action. It sends out welcome emails to the newly registered user and all sys
+  def send_welcome_emails
+    Email.welcome(@user).deliver
+    
+    # Send an email to Admins to advise them of the new registration
+    User.where(:admin => true, :admin_notifications => true).each do |admin|
+      Email.user_registration(admin, @user).deliver
+    end
+  end
+  
+  
 end

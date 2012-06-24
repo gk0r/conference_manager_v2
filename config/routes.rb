@@ -12,6 +12,7 @@ ConferenceManager2::Application.routes.draw do
   # My Routes
   get "my" => "bookings#my_index" # Allow easy reference to "My Bookings"
   get "profile" => "users#edit" # Allow easy reference to "My Profile"
+  get "test" => "application#test" # My Testing Harness
   
   # match "profile" => "users#edit"
 

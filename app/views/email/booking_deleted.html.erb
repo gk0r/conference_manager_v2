@@ -1,0 +1,17 @@
+<html>
+  <body>
+    Hi <%= @user.first_name %>, <br /><br />
+    
+    You cancelled your booking for <b> <%= @booking.conference_number.conference_number %>: </b><br /> <br />
+    
+    <strong>Cancelled Booking Details</strong> <br />
+    Date: <%= @booking.date.strftime('%A, %d %B %Y') %> <br />
+    From: <%= @booking.time_start.strftime('%I:%M %p') %> <br />
+    Until: <%= @booking.time_finish.strftime('%I:%M %p') %> <br /> <br />
+
+    You can make another booking at any time by <%= link_to "visiting Conference Manager.", new_booking_url %> <br /> <br />
+    
+    Thank you, <br />
+    Conference Manager <br />
+  </body>
+</html>

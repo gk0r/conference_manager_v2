@@ -1,10 +1,22 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   
-  helper_method :current_user
+  helper_method :current_user,
+                :authorise,
+                :authorise_action?,
+                :paginate_at,
+                :clear_booking_vars
+                
   before_filter :authorise
   
-  private
+  # This is my 'Test' method. Can be accessed via a GET request to /test URL.
+  def test 
+   Email.conference_number_added(current_user, ConferenceNumber.last, current_user).deliver
+    
+   redirect_to root_url
+  end
+  
+  protected
   
   def current_user
     @current_user ||= User.find(session[:user_id]) if session[:user_id]
@@ -16,17 +28,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def authorise_action(user_id)
-    return false unless @user_id = current_user.id or current_user.admin?
+  def authorise_action?(user_id)
+    return true if user_id == current_user.id or current_user.admin?
   end
   
-  def paginate_at ()
-    return 12
+  def paginate_at
+    return 10
   end
   
   def clear_booking_vars
     session[:current_step] = session[:booking_params] = session[:booking_step] = nil
   end
+  
+
   
   
 end

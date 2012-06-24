@@ -1,0 +1,25 @@
+<html>
+  <body>
+    Hi <%= @admin.first_name %>, <br /><br />
+    
+    <b><%= @actioned_by.to_label %></b> deleted <b><%= @user.to_label %>'s</b> account <br />
+    <b><%= @user.to_label %></b> may no longer use Conference Manager <br /><br />
+    
+    You have received this email because you are an Administrator for Conference Manager.  <br />
+    You can update your notification preference in <%= link_to "your user profile.", edit_user_url(@admin) %> <br /><br />
+
+    Thank you, <br />
+    Conference Manager <br /><br />
+    
+    |--------------------------------------------  <br />
+    | Deleted Account Details<br />
+    |--------------------------------------------  <br />
+    | Username: <%= @user.username %><br />
+    | First name: <%= @user.first_name %><br />
+    | Last name: <%= @user.last_name %><br />
+    | Telephone number: <%= @user.telephone_number %><br />
+    | Administrator flag: <%= @user.admin? %><br />
+    |--------------------------------------------  <br />
+    <%= debug(@subject_prefix)%>
+  </body>
+</html>

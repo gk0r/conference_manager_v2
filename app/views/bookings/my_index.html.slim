@@ -24,7 +24,7 @@
           th Date
           th Start
           th Finish
-          th Conference Number
+          th Number
           th Notes
           th Actions
 
@@ -35,9 +35,9 @@
             td = booking.time_start.strftime('%I:%M %p')
             td = booking.time_finish.strftime('%I:%M %p')
             td = booking.try(:conference_number).conference_number
-            td = booking.note
+            td = truncate(booking.note, :length => 40, :omission => '... (cont)')
             td 
-              - if authorise_action(booking.user.id)
+              - if authorise_action?(booking.user.id)
                 =' link_to 'Edit', edit_booking_path(booking), :class=>'btn btn-mini btn-primary'
                 =' link_to 'Cancel', booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger'
     
