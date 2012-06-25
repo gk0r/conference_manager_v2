@@ -24,3 +24,6 @@ This application is heavily customised to my current needs. You will need to for
 == Development Notes
 * I should probably move the various email notifications into the respective Models. This would be necessary if I implement the first ToDo.
 * Consider replacing the parse method on the Booking model with something a little more elegant and a little less expressive. Review this: http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html and think about before_validation callback to parse the data.
+
+== What am I doing now?
+* Trying to figure out how to hook-in Audited Gem in my Observers for email notifications. After this works, do a fresh commit.

@@ -16,10 +16,6 @@ ConferenceManager2::Application.routes.draw do
   
   # match "profile" => "users#edit"
 
-  ActiveAdmin.routes(self)
-
-  devise_for :admin_users, ActiveAdmin::Devise.config
-
   get "sign_up" => "users#new", :as => "sign_up"
   get "sign_in" => "sessions#new"
   post "sign_in" => "sessions#create"

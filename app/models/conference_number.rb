@@ -2,7 +2,9 @@ class ConferenceNumber < ActiveRecord::Base
   
   has_many :bookings
 
-  after_create :notify_admins
+  audited
+
+  # after_create :notify_admins # FIXME: Should this be replaced with after_commit?
   
   def to_label 
     "#{conference_number}" 
