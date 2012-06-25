@@ -23,7 +23,7 @@ class Email < ActionMailer::Base
   def user_deleted(admin, user, actioned_by)
     @admin = admin
     @user = user
-    @actioned_by = actioned_by
+    @actioned_by = User.find(actioned_by)
 
     mail  :to => @admin.username.to_s + "@centrelink.gov.au",
           subject: subject_prefix + @user.to_label + "'s account deleted."
@@ -32,7 +32,7 @@ class Email < ActionMailer::Base
   def conference_number_added(admin, conference_number, actioned_by)
     @admin = admin
     @conference_number = conference_number
-    @actioned_by = actioned_by
+    @actioned_by = User.find(actioned_by)
     
     mail  :to => @admin.username.to_s + "@centrelink.gov.au",
           subject: subject_prefix + "New conference number added: " + @conference_number.conference_number
@@ -41,7 +41,7 @@ class Email < ActionMailer::Base
   def conference_number_deleted(admin, conference_number, actioned_by)
     @admin = admin
     @conference_number = conference_number
-    @actioned_by = actioned_by
+    @actioned_by = User.find(actioned_by)
 
     mail  :to => @admin.username.to_s + "@centrelink.gov.au",
           subject: subject_prefix + "Conference number removed: " + @conference_number.conference_number
@@ -61,7 +61,7 @@ class Email < ActionMailer::Base
   def booking_deleted(user, booking, actioned_by)
     @user = user
     @booking = booking
-    @actioned_by = actioned_by
+    @actioned_by = User.find(actioned_by)
     
     mail  :to => @user.username.to_s + "@centrelink.gov.au",
           subject: subject_prefix + " Cancelled booking for #{@booking.conference_number.conference_number} 

@@ -54,7 +54,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       if @user.save
         session[:user_id] = @user.id unless session[:user_id] # Log the current user in upon successful registration, unless the user is already registered
-        send_welcome_emails
+        # send_welcome_emails
         format.html { redirect_to root_url }
         format.json { render json: @user, status: :created, location: @user }
       else
@@ -85,26 +85,11 @@ class UsersController < ApplicationController
   # DELETE /users/1.json
   def destroy
     @user = User.find(params[:id])
-    if current_user.admin?
-      User.where(:admin => true, :admin_notifications => true).each do |admin|
-        Email.user_deleted(admin, @user, current_user).deliver
-      end
-      @user.destroy
-    end
+    @user.destroy if current_user.admin?
 
     respond_to do |format|
       format.html { redirect_to users_url }
       format.json { head :no_content }
-    end
-  end
-  
-  # This method is called in CREATE action. It sends out welcome emails to the newly registered user and all sys
-  def send_welcome_emails
-    Email.welcome(@user).deliver
-    
-    # Send an email to Admins to advise them of the new registration
-    User.where(:admin => true, :admin_notifications => true).each do |admin|
-      Email.user_registration(admin, @user).deliver
     end
   end
   

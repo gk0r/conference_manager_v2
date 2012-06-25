@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   
   has_many :bookings
+  audited
 
   # This helps to serialise the model and provides me with a 'full name' 'virtual' model property
   def to_label 

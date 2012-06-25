@@ -1,23 +1,12 @@
 class ConferenceNumber < ActiveRecord::Base
   
   has_many :bookings
-
   audited
 
-  # after_create :notify_admins # FIXME: Should this be replaced with after_commit?
-  
   def to_label 
     "#{conference_number}" 
   end  
   
-  validates_presence_of :conference_number
-  
-  private
-  
-  def notify_admins
-    User.where(:admin => true, :admin_notifications => true).each do |admin|
-      Email.conference_number_added(admin, self, current_user).deliver
-    end
-  end
+  validates :conference_number, :presence => true, :uniqueness => true
   
 end
