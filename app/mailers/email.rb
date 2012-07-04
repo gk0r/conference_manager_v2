@@ -47,8 +47,8 @@ class Email < ActionMailer::Base
           subject: subject_prefix + "Conference number removed: " + @conference_number.conference_number
   end
   
-  def booking_created(user, booking)
-    @user = user
+  def booking_created(user_id, booking)
+    @user = User.find(user_id)
     @booking = booking
     
     mail  :to => @user.username.to_s + "@centrelink.gov.au",
@@ -58,15 +58,14 @@ class Email < ActionMailer::Base
             until #{@booking.time_finish.strftime('%I:%M %p')}"
   end
   
-  def booking_deleted(user, booking, actioned_by)
-    @user = user
+  def booking_deleted(booking, actioned_by)
     @booking = booking
     @actioned_by = User.find(actioned_by)
     
-    mail  :to => @user.username.to_s + "@centrelink.gov.au",
+    mail  :to => @booking.user.username.to_s + "@centrelink.gov.au",
           subject: subject_prefix + " Cancelled booking for #{@booking.conference_number.conference_number} 
             on #{@booking.date.strftime('%I:%M %p')} 
-            from #{booking.time_start.strftime('%I:%M %p')} 
+            from #{@booking.time_start.strftime('%I:%M %p')} 
             until #{@booking.time_finish.strftime('%I:%M %p')}"
     
   end

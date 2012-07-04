@@ -8,6 +8,8 @@ class Booking < ActiveRecord::Base
   
   validates_presence_of :user_id, :date, :time_start, :time_finish,                         :if => :first_step?
   validates_presence_of :conference_number_id, :user_id, :date, :time_start, :time_finish,  :if => :last_step?, :on => :save
+
+  audited
   
   def parse(current_user_id)
     # self.date = Date.parse(self.date.to_s) unless self.date.blank? 

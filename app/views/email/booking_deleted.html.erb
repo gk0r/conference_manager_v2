@@ -1,8 +1,8 @@
 <html>
   <body>
-    Hi <%= @user.first_name %>, <br /><br />
+    Hi <%= @booking.user.first_name %>, <br /><br />
     
-    You cancelled your booking for <b> <%= @booking.conference_number.conference_number %>: </b><br /> <br />
+    <%= actionee_reference %> cancelled your booking for <%= @booking.conference_number.conference_number %> <br /><br />
     
     <strong>Cancelled Booking Details</strong> <br />
     Date: <%= @booking.date.strftime('%A, %d %B %Y') %> <br />

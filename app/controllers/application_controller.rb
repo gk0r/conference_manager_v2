@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
   
   # This is my 'Test' method. Can be accessed via a GET request to /test URL.
   def test 
-   Email.conference_number_added(current_user, ConferenceNumber.last, current_user).deliver
+   Email.booking_deleted_by_admin(Booking.last, '1').deliver
     
    redirect_to root_url
   end

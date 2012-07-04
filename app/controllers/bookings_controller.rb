@@ -91,7 +91,6 @@ class BookingsController < ApplicationController
       clear_booking_vars
       flash[:notice] = "Booking Made !"
       redirect_to my_path
-      Email.booking_created(current_user, @booking).deliver
     else
       # This is for when the model is not valid
       render "new"
@@ -137,7 +136,6 @@ class BookingsController < ApplicationController
       clear_booking_vars
       flash[:notice] = "Booking updated!"
       redirect_to my_path
-      Email.booking_created(current_user, @booking).deliver
     else
       # This is for when the model is not valid
       render "edit"
@@ -149,10 +147,7 @@ class BookingsController < ApplicationController
   # DELETE /bookings/1.json
   def destroy
     @booking = Booking.find(params[:id])
-    if authorise_action?(@booking.user.id)
-      Email.booking_deleted(current_user, @booking, current_user).deliver
-      @booking.destroy
-    end
+    @booking.destroy if authorise_action?(@booking.user.id)
 
     respond_to do |format|
       format.html { redirect_to :back }#bookings_url }
