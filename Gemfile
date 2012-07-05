@@ -37,4 +37,4 @@ gem 'debugger', group: [:development, :test]
 gem 'letter_opener', :group => :development
 
 # Experimental area
-gem "audited-activerecord"
+gem 'audited-activerecord'

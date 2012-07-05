@@ -15,7 +15,6 @@ This application is heavily customised to my current needs. You will need to for
 * Email notifications for key events
 
 == ToDo
-* Introduce feature to cascade deletions for conference numbers. When an Administrator deletes and existing conference number, the system should automatically cascade and delete all associated bookings and issue cancellation emails to all users with forward bookings.
 * Workout a way to manage concurrent conflicts. Find a way to re-run the availability immediately prior to saving the booking model in case another user had been quicker and already managed to book 
 
 == Bugs
@@ -27,4 +26,3 @@ This application is heavily customised to my current needs. You will need to for
 
 == What am I doing now?
 * #1 Fix the missing java script problem in the Booking form
-* #2 Add Observer Functionality to Booking model
