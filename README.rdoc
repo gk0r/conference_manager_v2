@@ -16,6 +16,7 @@ This application is heavily customised to my current needs. You will need to for
 
 == ToDo
 * Workout a way to manage concurrent conflicts. Find a way to re-run the availability immediately prior to saving the booking model in case another user had been quicker and already managed to book 
+* Move the email notifications into another thread/process with Resquie or Sidekiq
 
 == Bugs
 * 'Cancel this booking' button does not work. It needs to invoke a delete action on the bookings controller.
@@ -25,4 +26,5 @@ This application is heavily customised to my current needs. You will need to for
 * Consider replacing the parse method on the Booking model with something a little more elegant and a little less expressive. Review this: http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html and think about before_validation callback to parse the data.
 
 == What am I doing now?
-* #1 Fix the missing java script problem in the Booking form
+1. Redesign the Booking model and the Create and Update actions within the controller to store the Booking object within the session hash until it's ready to be saved.
+2. Create the right translation from the user entered time into the DateTime required by rails.

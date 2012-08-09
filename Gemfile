@@ -35,6 +35,7 @@ gem 'nokogiri'
 
 gem 'debugger', group: [:development, :test]
 gem 'letter_opener', :group => :development
+gem 'quiet_assets', group: :development
 
 # Experimental area
 gem 'audited-activerecord'

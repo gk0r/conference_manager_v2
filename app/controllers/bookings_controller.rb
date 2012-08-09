@@ -63,8 +63,10 @@ class BookingsController < ApplicationController
     session[:booking_params].deep_merge!(params[:booking]) if params[:booking]
     #session[:booking_params] : params[:booking] # Not sure what I was trying to do here...
     
-    @booking = Booking.new(session[:booking_params])
-    @booking.parse(current_user.id)
+    # @booking = Booking.new(session[:booking_params])
+    @booking = Booking.new(params[:booking])
+    @booking.user_id = current_user.id
+    # @booking.parse(current_user.id)
     @booking.current_step = session[:booking_step] if session[:booking_step]
 
     if params[:cancel]
@@ -115,7 +117,7 @@ class BookingsController < ApplicationController
     if params[:cancel]
       # Cancel button
       clear_booking_vars
-      redirect_to root_url
+      redirect_to my_path
       
     elsif params[:reschedule]
       session[:booking_step] = @booking.previous_step
