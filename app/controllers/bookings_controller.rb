@@ -59,88 +59,77 @@ class BookingsController < ApplicationController
   # POST /bookings
   # POST /bookings.json
   def create
-    session[:booking_params] = Hash.new unless session[:booking_params] # Initialise the Hash to avoid unknown method deep_merge! exception
-    session[:booking_params].deep_merge!(params[:booking]) if params[:booking]
-    #session[:booking_params] : params[:booking] # Not sure what I was trying to do here...
-    
-    # @booking = Booking.new(session[:booking_params])
     @booking = Booking.new(params[:booking])
+    @booking.current_step = session[:current_step] if session[:current_step].present?
     @booking.user_id = current_user.id
-    # @booking.parse(current_user.id)
-    @booking.current_step = session[:booking_step] if session[:booking_step]
-
+    
     if params[:cancel]
       @booking.destroy
       redirect_to clear_booking_steps_url
-
-    elsif params[:reschedule]
-      session[:booking_step] = @booking.previous_step
-      render "new"
-
-    elsif @booking.valid? and @booking.first_step?
-      @conference_numbers = @booking.check_availability
-      if @conference_numbers.empty?
-        session[:booking_step] = @booking.previous_step
-        flash[:error] = "No conference numbers available at the time you have chosen, please reschedule"
-      else
-        session[:booking_step] = @booking.next_step
-      end
-      render "new"
-
-    elsif @booking.valid? and @booking.last_step?
-      # Booking is valid and on the last_step. Save the model and return back to the main page.
-      @booking.save
-      clear_booking_vars
-      flash[:notice] = "Booking Made !"
-      redirect_to my_path
-    else
-      # This is for when the model is not valid
-      render "new"
+      
+    elsif @booking.valid? 
+      if @booking.first_step?
+        @conference_numbers = @booking.check_availability
+        if @conference_numbers.empty?
+          flash[:error] = "No conference numbers are available at the time you have chosen"
+        else
+          session[:current_step] = @booking.next_step
+        end
+        render "new"
+      
+      elsif @booking.last_step?
+        clear_booking_vars # Cledaring session variables related to this booking. Irrespective of whether we are able to save the model, or encounter an error, we can't use this data and therefore should dump it.
+        if @booking.save
+          flash[:notice] = 'Booking made'
+          redirect_to my_path
+        else
+          flash[:error] = 'ERROR: an error occured whilst making this booking, please try again.'
+          render 'new'
+        end
+      end      
+    
+    else # This is for when the model is not valid
+      render 'new'
     end
-
+    
   end
 
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
-    # Developer Notes: I need a session hash here to keep track of the @booking.time_start and @booking.time_finish. For some reason
-    # Rails does not process form fields that disabled. In order to overcome this, I have to store this information inside the session.
-    session[:booking_params] = Hash.new unless session[:booking_params] # Initialise the Hash to avoid unknown method deep_merge! exception
-    session[:booking_params].deep_merge!(params[:booking]) if params[:booking]
-
-    @booking = Booking.find(params[:id])  
-    # Do I need the line below in the UPDATE scenario?
-    @booking.parse(current_user.id) # Parse the model attributes (specifically the time_start and time_finish that has date attributes)
-    @booking.current_step = session[:booking_step] # Retrieve the current step from the session hash. This is updated further on.
-    @booking.attributes = session[:booking_params]
-
+    
+    @booking = Booking.find(params[:id])
+    @booking.current_step = session[:current_step] if session[:current_step].present?
+    @booking.attributes = params[:booking]
+    @booking.user_id = current_user.id
+    
     if params[:cancel]
-      # Cancel button
-      clear_booking_vars
-      redirect_to my_path
+      @booking.destroy
+      redirect_to clear_booking_steps_url
       
-    elsif params[:reschedule]
-      session[:booking_step] = @booking.previous_step
-      render "edit"
+    elsif @booking.valid? 
+      if @booking.first_step?
+        @conference_numbers = @booking.check_availability
+        if @conference_numbers.empty?
+          flash[:error] = 'No conference numbers are available at the time you have chosen'
+        else
+          session[:current_step] = @booking.next_step
+        end
+        render "edit"
       
-    elsif @booking.valid? and @booking.first_step?
-      @conference_numbers = @booking.check_availability
-      if @conference_numbers.empty?
-        session[:booking_step] = @booking.previous_step
-        flash[:error] = "No conference numbers available at the time you have chosen, please reschedule"
-      else
-        session[:booking_step] = @booking.next_step
-      end
-      render "edit"
-
-    elsif @booking.valid? and @booking.last_step? #and @booking.update_attributes(params[:booking])
-      @booking.save
-      clear_booking_vars
-      flash[:notice] = "Booking updated!"
-      redirect_to my_path
-    else
-      # This is for when the model is not valid
-      render "edit"
+      elsif @booking.last_step?
+        clear_booking_vars # Cledaring session variables related to this booking. Irrespective of whether we are able to save the model, or encountered an error, we can't use this data and therefore should dump it.
+        if @booking.save
+          flash[:notice] = 'Booking made'
+          redirect_to my_path
+        else
+          flash[:error] = 'ERROR: an error occured whilst making this booking, please try again.'
+          render 'new'
+        end
+      end      
+    
+    else # This is for when the model is not valid
+      render 'edit'
     end
     
   end # End of UPDATE action

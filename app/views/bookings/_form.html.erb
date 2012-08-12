@@ -4,11 +4,12 @@
       <%= f.error_notification %>
 
       <div class="form-inputs">
-        <%= f.input :date, :as => :string, :disabled => @booking.last_step?, 
-            :input_html => { :class => 'span2', :value => (@booking.date.strftime("%A, %d %B %Y") if @booking.date) } %>
-        <%= f.input :time_start, :as => :string, :disabled => @booking.last_step?, 
+        <%= f.input :date, :as => :string,
+            :input_html => { :class => 'span2', :readonly => @booking.last_step?, 
+              :value => (@booking.date.strftime("%A, %d %B %Y") if @booking.date) } %>
+        <%= f.input :time_start, :as => :string, :readonly => @booking.last_step?, 
             :input_html => { :class => 'span1', :value => (@booking.time_start.strftime("%H:%M %p") if @booking.time_start) } %>
-        <%= f.input :time_finish, :as => :string, :input_html => { :class => 'span1'}, :disabled => @booking.last_step?,
+        <%= f.input :time_finish, :as => :string, :input_html => { :class => 'span1'}, :readonly => @booking.last_step?,
              :input_html => { :class => 'span1', :value => (@booking.time_finish.strftime("%H:%M %p") if @booking.time_finish) } %>
         <%= f.input :note, :input_html => {:cols => 50, :rows => 3} %>
 
@@ -28,3 +29,6 @@
 </div>
 
 <%= debug(params[:booking]) %>
+<%= debug(@booking) %>
+<%= debug(session[:current_step]) %>
+<%= debug(@booking.last_step?) %>
