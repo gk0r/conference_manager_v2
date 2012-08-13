@@ -55,8 +55,42 @@ class Booking < ActiveRecord::Base
       self.time_finish])
   end
   
+  def reschedule_availability
+    # NOTE: This method is much better than check_availability above. It retrieves the actual objects instead of just the queried parameters.
+    # It also reduces the written SQL portion of the query and effectively starts with 'NOT IN' portion.
+    # Finally, it uses name placers such as ':start' and ':current_booking_id' instead of the ambigeous question marks '?'.
+    
+    # FIXME: Re-write 'check_availability' method with the pointers contained in the comments of this section.
+    ConferenceNumber.where(  
+                              ["id NOT IN 
+                                (
+                                  SELECT conference_numbers.id 
+                                  FROM conference_numbers 
+                                  INNER JOIN bookings 
+                                  ON conference_numbers.id=bookings.conference_number_id 
+                                  WHERE 
+                                  (
+                                    bookings.id <> :current_booking_id 
+                                    AND
+                                    (
+                                      (bookings.time_start BETWEEN :start AND :almost_finished) 
+                                      OR (bookings.time_finish BETWEEN :just_started AND :finish)
+                                    )
+                                  )
+                                )",
+                                {
+                                  :current_booking_id => self.id,
+                                  :start              => self.time_start, 
+                                  :almost_finished    => self.time_finish - 1.second, 
+                                  :just_started       => self.time_start + 1.second, 
+                                  :finish             => self.time_finish
+                                }
+                              ]
+                          )
+  end
+  
   def update_time
-    self.time_start = Time.parse("#{date} #{time_start.strftime('%H:%M %p')}") if self.time_start.present?
+    self.time_start  = Time.parse("#{date} #{time_start.strftime('%H:%M %p')}") if self.time_start.present?
     self.time_finish = Time.parse("#{date} #{time_finish.strftime('%H:%M %p')}") if self.time_finish.present?
   end
   

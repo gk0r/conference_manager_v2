@@ -5,7 +5,11 @@ class User < ActiveRecord::Base
 
   # This helps to serialise the model and provides me with a 'full name' 'virtual' model property
   def to_label 
-    "#{first_name} #{last_name}" 
+    [first_name, last_name].join(" ")
+  end
+  
+  def full_name
+    to_label
   end
   
   # attr_accessible :username, :password, :first_name, :last_name, :telephone_number # FIXME: Rationalise this. I should not need all three lines of code.

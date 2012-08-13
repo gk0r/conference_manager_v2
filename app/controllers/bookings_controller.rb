@@ -109,7 +109,7 @@ class BookingsController < ApplicationController
       
     elsif @booking.valid? 
       if @booking.first_step?
-        @conference_numbers = @booking.check_availability
+        @conference_numbers = @booking.reschedule_availability
         if @conference_numbers.empty?
           flash[:error] = 'No conference numbers are available at the time you have chosen'
         else
