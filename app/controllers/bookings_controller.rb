@@ -103,8 +103,8 @@ class BookingsController < ApplicationController
     @booking.attributes = params[:booking]
     @booking.user_id = current_user.id
     
-    if params[:cancel]
-      @booking.destroy
+    if params[:cancel_this_booking]
+      @booking.destroy if authorise_action?(@booking.user.id)
       redirect_to clear_booking_steps_url
       
     elsif @booking.valid? 
@@ -141,7 +141,7 @@ class BookingsController < ApplicationController
     @booking.destroy if authorise_action?(@booking.user.id)
 
     respond_to do |format|
-      format.html { redirect_to :back }#bookings_url }
+      format.html { redirect_to my_path }#bookings_url }
       format.json { head :no_content }
     end
   end

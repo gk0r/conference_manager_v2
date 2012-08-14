@@ -38,10 +38,10 @@
             td = truncate(booking.note, :length => 40, :omission => '... (cont)')
             td 
               - if authorise_action?(booking.user.id)
-                =' link_to 'Edit', edit_booking_path(booking), :class=>'btn btn-mini btn-primary'
-                =' link_to 'Cancel', booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger'
+                =' link_to '<i class="icon-list-alt icon-white"></i> Edit'.html_safe, edit_booking_path(booking), :class=>'btn btn-mini btn-primary'
+                =' link_to '<i class="icon-trash icon-white"></i> Cancel'.html_safe, booking, confirm: 'Are you sure?', method: :delete, :class=>'btn btn-mini btn-danger'
     
     .pagination-centered
       = will_paginate @bookings
       
-    = link_to 'New Booking', new_booking_path, :class => 'btn btn-primary'
+    = link_to '<i class="icon-pencil icon-white"></i> New Booking'.html_safe, new_booking_path, :class => 'btn btn-primary'

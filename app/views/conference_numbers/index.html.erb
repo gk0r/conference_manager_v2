@@ -19,8 +19,9 @@
         		
         		<% if current_user.admin? %>
           		<td>
-            		<%= link_to 'Edit', edit_conference_number_path(conference_number), :class => 'btn btn-mini btn-primary' %>
-            		<%= link_to 'Remove', conference_number, confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %> 
+            		<%= link_helper(edit_conference_number_path(conference_number), "Edit", 'btn-mini btn-primary', 'icon-list-alt icon-white').html_safe %>
+            		<%= link_to '<i class="icon-trash icon-white"></i> Delete'.html_safe, conference_number, 
+            		  confirm: 'Are you sure?', method: :delete, :class => 'btn btn-mini btn-danger' %> 
           		</td>
         		<% end %>
       		</tr>
@@ -28,6 +29,6 @@
       </tbody>
     </table>
 
-    <%= link_to 'New Conference number', new_conference_number_path, :class => 'btn btn-primary' %>
+    <%= link_helper(new_conference_number_path, "New Conference Number", "btn-primary", "icon-pencil icon-white").html_safe %>
   </div>
 </div>

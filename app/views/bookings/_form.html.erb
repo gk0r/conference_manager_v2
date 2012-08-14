@@ -17,12 +17,20 @@
       </div>
   
       <div class="form-actions">
-        <%= f.submit (@booking.last_step? ? "Book" : "Check availability"), :class=>'btn btn-primary' %>
-        <%= f.submit "Cancel", :name => "cancel", :class=>'btn btn-danger' %>
-        <!-- The 'Cancel this booking button does not work at the moment -->
-        <%= f.submit "Cancel this booking", :name => "cancel", :class=>'btn btn-danger' unless @booking.new_record? %>
-        <%= f.submit "Reschedule", :name => "reschedule", :class => 'btn btn-warning' if @booking.last_step? %>
+        <% if authorise_action?(current_user) %>
+          <%= f.submit (@booking.last_step? ? "Book" : "Check availability"), :class=>'btn btn-primary' %>
+          <%= f.submit "Reschedule", :name => "reschedule", :class => 'btn btn-warning' if @booking.last_step? %>
+          <% unless @booking.new_record? %>
+            <%= link_to @booking, confirm: 'Are you sure you want to cancel this booking?', method: :delete, 
+              :class=>'btn btn-danger' do  %>
+              <i class="icon-trash icon-white"> </i> Cancel this booking
+            <% end %>
+          <% end %>
+        <% end %>
+        
+        <%= link_to '<i class="icon-remove"></i> Cancel'.html_safe, my_path, :class => 'btn' %>
       </div>
+      
 
     <% end %>
   </div>
