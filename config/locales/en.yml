@@ -19,4 +19,7 @@ en:
   booking:
     updated: "Booking successfully updated"
     created: "Your booking for %{date} from %{time_start} to %{time_finish} was successfully created."
+    made: 'Booking made'
+    no_conference_numbers_are_available: 'Unfortunately no conference numbers are available at the time you have chosen, please try chosing a different time slot'
+    errror: 'ERROR: an error occured whilst making this booking, please try again.'
   test: "test %{test}"

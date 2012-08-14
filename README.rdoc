@@ -15,7 +15,6 @@ This application is heavily customised to my current needs. You will need to for
 * Email notifications for key events
 
 == ToDo
-* Workout a way to manage concurrent conflicts. Find a way to re-run the availability immediately prior to saving the booking model in case another user had been quicker and already managed to book 
 * Move the email notifications into another thread/process with Resquie or Sidekiq
 
 == Bugs

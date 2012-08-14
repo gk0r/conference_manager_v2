@@ -60,79 +60,18 @@ class BookingsController < ApplicationController
   # POST /bookings.json
   def create
     @booking = Booking.new(params[:booking])
-    @booking.current_step = session[:current_step] if session[:current_step].present?
-    @booking.user_id = current_user.id
     
-    if params[:cancel]
-      @booking.destroy
-      redirect_to clear_booking_steps_url
-      
-    elsif @booking.valid? 
-      if @booking.first_step?
-        @conference_numbers = @booking.check_availability
-        if @conference_numbers.empty?
-          flash[:error] = "No conference numbers are available at the time you have chosen"
-        else
-          session[:current_step] = @booking.next_step
-        end
-        render "new"
-      
-      elsif @booking.last_step?
-        clear_booking_vars # Cledaring session variables related to this booking. Irrespective of whether we are able to save the model, or encounter an error, we can't use this data and therefore should dump it.
-        if @booking.save
-          flash[:notice] = 'Booking made'
-          redirect_to my_path
-        else
-          flash[:error] = 'ERROR: an error occured whilst making this booking, please try again.'
-          render 'new'
-        end
-      end      
-    
-    else # This is for when the model is not valid
-      render 'new'
-    end
-    
+    user_interaction('new')
   end
 
   # PUT /bookings/1
   # PUT /bookings/1.json
   def update
-    
     @booking = Booking.find(params[:id])
-    @booking.current_step = session[:current_step] if session[:current_step].present?
     @booking.attributes = params[:booking]
-    @booking.user_id = current_user.id
     
-    if params[:cancel_this_booking]
-      @booking.destroy if authorise_action?(@booking.user.id)
-      redirect_to clear_booking_steps_url
-      
-    elsif @booking.valid? 
-      if @booking.first_step?
-        @conference_numbers = @booking.reschedule_availability
-        if @conference_numbers.empty?
-          flash[:error] = 'No conference numbers are available at the time you have chosen'
-        else
-          session[:current_step] = @booking.next_step
-        end
-        render "edit"
-      
-      elsif @booking.last_step?
-        clear_booking_vars # Cledaring session variables related to this booking. Irrespective of whether we are able to save the model, or encountered an error, we can't use this data and therefore should dump it.
-        if @booking.save
-          flash[:notice] = 'Booking made'
-          redirect_to my_path
-        else
-          flash[:error] = 'ERROR: an error occured whilst making this booking, please try again.'
-          render 'new'
-        end
-      end      
-    
-    else # This is for when the model is not valid
-      render 'edit'
-    end
-    
-  end # End of UPDATE action
+    user_interaction('edit')
+  end 
 
   # DELETE /bookings/1
   # DELETE /bookings/1.json
@@ -143,6 +82,50 @@ class BookingsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to my_path }#bookings_url }
       format.json { head :no_content }
+    end
+  end
+  
+  def user_interaction(mode)
+    # Accepted 'mode' values:
+    #   new   - Renders new action
+    #   edit  - Renders edit action
+    
+    @booking.current_step = session[:current_step] if session[:current_step].present?
+    @booking.user_id = current_user.id
+    
+    if params[:cancel_this_booking]
+      @booking.destroy if authorise_action?(@booking.user.id)
+      redirect_to clear_booking_steps_url
+      
+    elsif params[:reschedule]
+      session[:current_step] = @booking.previous_step
+      render mode
+      
+    elsif @booking.valid? 
+      if @booking.first_step?
+        # Call @booking.check_availability when running in the 'new' mode, otherwise default to @booking.reschedule_availability
+        (mode == 'new') ? @conference_numbers = @booking.check_availability : @conference_numbers = @booking.reschedule_availability
+        
+        if @conference_numbers.empty?
+          flash[:error] = t('booking.no_conference_numbers_are_available')
+        else
+          session[:current_step] = @booking.next_step
+        end
+        render mode
+      
+      elsif @booking.last_step?
+        clear_booking_vars # Cledaring session variables related to this booking. Irrespective of whether we are able to save the model, or encounter an error, we can't use this data and therefore should dump it.
+        if @booking.save
+          flash[:notice] = t('booking.made')
+          redirect_to my_path
+        else
+          flash[:error] = t('booking.error')
+          render mode
+        end
+      end      
+    
+    else # This is for when the model is not valid
+      render mode
     end
   end
   
