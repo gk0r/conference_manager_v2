@@ -6,8 +6,8 @@ class Booking < ActiveRecord::Base
   
   attr_accessible :user_id, :date, :time_start, :time_finish, :conference_number_id, :note, :conference_number
   
-  validates_presence_of :user_id, :date, :time_start, :time_finish,                         :if => :first_step?
-  validates_presence_of :conference_number_id, :user_id, :date, :time_start, :time_finish,  :if => :last_step?, :on => :save
+  validates_presence_of :user_id, :date, :time_start, :time_finish
+  validates_presence_of :conference_number_id,                            :if => :last_step?, :on => :save
 
   audited
   

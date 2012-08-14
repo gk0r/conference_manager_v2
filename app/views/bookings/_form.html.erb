@@ -7,13 +7,14 @@
         <%= f.input :date, :as => :string,
             :input_html => { :class => 'span2', :readonly => @booking.last_step?, 
               :value => (@booking.date.strftime("%A, %d %B %Y") if @booking.date) } %>
-        <%= f.input :time_start, :as => :string, :readonly => @booking.last_step?, 
+        <%= f.input :time_start, :as => :string, :readonly => @booking.last_step?,
             :input_html => { :class => 'span1', :value => (@booking.time_start.strftime("%H:%M %p") if @booking.time_start) } %>
         <%= f.input :time_finish, :as => :string, :input_html => { :class => 'span1'}, :readonly => @booking.last_step?,
              :input_html => { :class => 'span1', :value => (@booking.time_finish.strftime("%H:%M %p") if @booking.time_finish) } %>
         <%= f.input :note, :input_html => {:cols => 50, :rows => 3} %>
 
-        <%= f.input :conference_number_id, :collection => @conference_numbers, :as => :select, :include_blank => false if @booking.last_step? %>
+        <%= f.input :conference_number_id, :required => true, 
+            :collection => @conference_numbers, :as => :select, :include_blank => false if @booking.last_step? %>
       </div>
   
       <div class="form-actions">
@@ -35,8 +36,3 @@
     <% end %>
   </div>
 </div>
-
-<%= debug(params[:booking]) %>
-<%= debug(@booking) %>
-<%= debug(session[:current_step]) %>
-<%= debug(@booking.last_step?) %>
