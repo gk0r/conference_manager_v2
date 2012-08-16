@@ -47,9 +47,11 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    logger.debug "!! Inside the CREATE action of the USERS controller"
-    @user = User.new(params[:user], :as => current_user.role.to_sym )
-    logger.debug "!! @user.role.to_sym [Create] = #{@user.role.to_sym}"
+    if current_user
+      @user = User.new(params[:user], :as => current_user.role.to_sym)
+    else 
+      @user = User.new(params[:user], :as => :user)
+    end
 
     respond_to do |format|
       if @user.save

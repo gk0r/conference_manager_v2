@@ -15,7 +15,7 @@ en:
     sign_in: "Welcome %{name}!"
     sign_out: "You have logged out successfully"
     invalid_username_or_password: "Invalid Username/Password combination"
-    please_sign_in: "Please Sign In or Register to use Conference Manager" # Work out how to pass the links properly
+    please_sign_in: 'Please Sign In or <a href="/users/new">Register</a> to use Conference Manager' # Work out how to pass the links properly
   booking:
     updated: "Booking successfully updated"
     created: "Your booking for %{date} from %{time_start} to %{time_finish} was successfully created."

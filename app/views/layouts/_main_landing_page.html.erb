@@ -21,6 +21,18 @@
     <a href="/test"> <i class="icon-font"></i> Render Email </a>
   </li>
   
+  <li class="nav-header"> Admin Overview</li>
+  <li>
+    <a href="<%= conference_numbers_path %>"> <i class="icon-ok-sign"></i> <%= ConferenceNumber.count %> Conference numbers </a>
+  </li>  
+  
+  <li>
+    <a href="<%= users_path %>"> <i class="icon-ok-sign"></i> <%= User.count %> Users registered </a>
+  </li>
+  
+  <li>
+    <a href="<%= users_path %>"> <i class="icon-ok-sign"></i> <%= User.where(:admin => true).count %> Administrators </a>
+  </li>
 </ul>
 
 <div class="span8">

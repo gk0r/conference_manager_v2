@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   
   def authorise
     unless current_user
-      redirect_to sign_in_path, notice: t('flash.please_sign_in') # FIXME: Turn 'Sign In' and 'Register' into clickable links and move the text out of the controller and into internationalisation file
+      redirect_to sign_in_path, notice: t('flash.please_sign_in', :sign_in_url => "Test").html_safe # FIXME: Turn 'Sign In' and 'Register' into clickable links and move the text out of the controller and into internationalisation file
     end
   end
 
