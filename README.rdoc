@@ -18,10 +18,9 @@ This application is heavily customised to my current needs. You will need to for
 * Move the email notifications into another thread/process with Resquie or Sidekiq
 
 == Bugs
-* 'Cancel this booking' button does not work. It needs to invoke a delete action on the bookings controller.
+* All known bugs have been fixed.
 
 == Development Notes
-* I should probably move the various email notifications into the respective Models. This would be necessary if I implement the first ToDo.
-* Consider replacing the parse method on the Booking model with something a little more elegant and a little less expressive. Review this: http://api.rubyonrails.org/classes/ActiveRecord/Callbacks.html and think about before_validation callback to parse the data.
+* I should replace the current Twitter Bootstrap Gem with the SASS version: https://github.com/thomas-mcdonald/bootstrap-sass. This will allow me to not have the libv8 dependancy and deploy the application seamlessly on windows platform.
 
 == What am I doing now?
