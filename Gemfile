@@ -20,6 +20,7 @@ gem 'jquery-rails'
 gem 'simple_form'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 # gem 'activeadmin' # Check out an alternative gem - rails admin? # I do not want this admin interface anymore. 
+gem 'rails_admin'
 gem 'slim' # Alternative template engine, has certain merits when marking up layout.
 gem 'bootstrap-will_paginate'
 
