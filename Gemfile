@@ -12,16 +12,17 @@ gem 'sqlite3'
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'twitter-bootstrap-rails'
   gem 'uglifier', '>= 1.0.3'
 end
 
+gem 'bootstrap-sass'
 gem 'jquery-rails'
 gem 'simple_form'
 gem 'bcrypt-ruby', :require => 'bcrypt'
 # gem 'activeadmin' # Check out an alternative gem - rails admin? # I do not want this admin interface anymore. 
-gem 'rails_admin'
+# gem 'rails_admin'
 gem 'slim' # Alternative template engine, has certain merits when marking up layout.
+gem 'slim-rails' 
 gem 'bootstrap-will_paginate'
 
 # Following three are included to use Red Carpet and Markdown from http://railscasts.com/episodes/272-markdown-with-redcarpet
